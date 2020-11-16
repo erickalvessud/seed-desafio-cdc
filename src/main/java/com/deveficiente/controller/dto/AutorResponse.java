@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class AutorDTO {
+public class AutorResponse {
 
 	@EqualsAndHashCode.Include
 	private Long id;
@@ -34,17 +34,9 @@ public class AutorDTO {
 
 	private LocalDateTime dataResgistro;
 	
-	public AutorEntity toEntity() {
-		return AutorEntity.builder()
-			.nome(this.getNome())
-			.email(this.email)
-			.descricao(this.descricao)
-			.build();
-	}
-	
-	public static AutorDTO fromEntity(AutorEntity autorEntity) {
+	public static AutorResponse fromEntity(AutorEntity autorEntity) {
 		
-		return AutorDTO.builder()
+		return AutorResponse.builder()
 				.id(autorEntity.getId())
 				.nome(autorEntity.getNome())
 				.email(autorEntity.getEmail())

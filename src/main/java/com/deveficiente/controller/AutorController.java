@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.deveficiente.controller.dto.AutorDTO;
+import com.deveficiente.controller.dto.AutorRequest;
+import com.deveficiente.controller.dto.AutorResponse;
 import com.deveficiente.jpa.entity.AutorEntity;
 import com.deveficiente.jpa.repository.AutorRepository;
 
@@ -24,8 +25,9 @@ public class AutorController {
 
 	@PostMapping
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public AutorDTO cadastra(@RequestBody @Validated AutorDTO autor) {
+	public AutorResponse cadastra(@RequestBody @Validated AutorRequest autor) {
 		AutorEntity autorSalvo = this.autorRepository.save(autor.toEntity());
-		return AutorDTO.fromEntity(autorSalvo);
+		return AutorResponse.fromEntity(autorSalvo);
 	}
+	
 }

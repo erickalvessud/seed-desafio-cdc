@@ -10,10 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Length;
-
-import com.deveficiente.controller.dto.AutorDTO;
+import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +23,6 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name = "autor")
 @Data
-@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class AutorEntity {
 	
@@ -42,4 +42,31 @@ public class AutorEntity {
 
 	@Builder.Default
 	private LocalDateTime dataResgistro = LocalDateTime.now();
+	
+	private EmailValidator emailValidator;
+
+	public AutorEntity(@NotBlank String nome,@NotBlank @Email String email,
+			@NotBlank @Size(max = 400) String descricao) {
+
+		this.validarAtributosEntrada(nome, email, descricao);
+
+		this.nome = nome;
+		this.email = email;
+		this.descricao = descricao;
+	}
+
+	private void validarAtributosEntrada(String nome, String email, String descricao) {
+		Assert.hasLength(nome, "Atributo nome não pode ser fazio");
+
+		if ( !EmailValidator.getInstance().isValid(email)) {
+			throw new IllegalArgumentException("Atributo e-mail inválido");
+		}
+		
+		Assert.hasLength(descricao, "Atributo descricao não pode ser fazio");
+		if (descricao.length() > 400) {
+			throw new IllegalArgumentException("Atributo descricao deve ter um tamanho menor ou igual a 400");
+		}
+	}
+	
+	
 }
