@@ -29,7 +29,7 @@ public class EmailAutorValidator implements Validator {
 		AutorRequest autorRequest = ((AutorRequest)target);
 		
 		if ( this.autorRepository.existsByEmail(autorRequest.getEmail())) {
-			errors.rejectValue("email", "Email já cadastrado no sistema");
+			errors.rejectValue("email", "duplicate.autorRequest.email",  "Email já cadastrado no sistema");
 		}
 	}
 

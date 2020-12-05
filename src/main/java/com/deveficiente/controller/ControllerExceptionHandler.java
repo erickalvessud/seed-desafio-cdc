@@ -43,7 +43,7 @@ public class ControllerExceptionHandler {
 		fieldErrors.forEach(error -> {
 			String errorMessage = getErrorMessage(error);
 			System.out.println("error-> "+ errorMessage);
-			validationErrosDto.addFieldError(error.getField(), errorMessage);
+			validationErrosDto.addFieldError(error.getField() , errorMessage);
 		});
 		
 		return validationErrosDto;
