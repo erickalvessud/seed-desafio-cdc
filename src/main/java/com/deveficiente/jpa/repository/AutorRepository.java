@@ -8,4 +8,6 @@ import com.deveficiente.jpa.entity.AutorEntity;
 @Repository
 public interface AutorRepository extends JpaRepository<AutorEntity, Long> {
 
+	boolean existsByEmail(String nome);
+
 }
