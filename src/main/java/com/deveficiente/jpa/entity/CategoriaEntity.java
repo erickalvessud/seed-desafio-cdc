@@ -27,6 +27,10 @@ public class CategoriaEntity {
 	
 	@EqualsAndHashCode.Include
 	private String nome;
+	
+	@Deprecated
+	public CategoriaEntity() {
+	}
 
 	public CategoriaEntity(@NotBlank String nome) {
 		Assert.hasLength(nome

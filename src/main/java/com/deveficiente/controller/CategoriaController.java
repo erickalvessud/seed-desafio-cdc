@@ -16,30 +16,23 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.deveficiente.controller.dto.CategoriaRequest;
-import com.deveficiente.controller.validator.CategoriaProibeNomeDuplicaoValidator;
 import com.deveficiente.jpa.entity.CategoriaEntity;
 
 @RestController
 @RequestMapping("/categorias")
+//carga intrinseca 2
 public class CategoriaController {
 
 	private EntityManager entityManager;
-	private CategoriaProibeNomeDuplicaoValidator categoriaProibeNomeDuplicadovalidator;
 
-	public CategoriaController(EntityManager entityManager, CategoriaProibeNomeDuplicaoValidator validator) {
+	public CategoriaController(EntityManager entityManager) {
 		this.entityManager = entityManager;
-		this.categoriaProibeNomeDuplicadovalidator = validator;
 	}
 	
-	@InitBinder
-	public void init(WebDataBinder webDataBinder) {
-		webDataBinder.addValidators(categoriaProibeNomeDuplicadovalidator);
-		
-	}
-
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
 	@Transactional
+	//2
 	public void cadastra(@RequestBody @Valid @NotBlank CategoriaRequest categoria) {
 		this.entityManager.persist(new CategoriaEntity(categoria.getNome()));
 	}
