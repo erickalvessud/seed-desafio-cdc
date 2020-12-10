@@ -44,6 +44,11 @@ public class AutorEntity {
 	private LocalDateTime dataResgistro = LocalDateTime.now();
 	
 	private EmailValidator emailValidator;
+	
+	@Deprecated
+	public AutorEntity() {
+		
+	}
 
 	public AutorEntity(@NotBlank String nome,@NotBlank @Email String email,
 			@NotBlank @Size(max = 400) String descricao) {
