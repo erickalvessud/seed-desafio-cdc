@@ -13,18 +13,17 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.util.Assert;
 
 import com.deveficiente.jpa.entity.AutorEntity;
 import com.deveficiente.jpa.entity.CategoriaEntity;
 import com.deveficiente.jpa.entity.LivroEntity;
-import com.deveficiente.jpa.repository.AutorRepository;
-import com.deveficiente.jpa.repository.CategoriaRepository;
 import com.deveficiente.util.ExistsId;
 import com.deveficiente.util.UniqueValeu;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-
+// 2 pontos de carca intrinseca
 public class NovoLivroRequest {
 
 	@NotBlank
@@ -84,13 +83,24 @@ public class NovoLivroRequest {
 				+ ", idCategoria=" + idCategoria + ", idAutor=" + idAutor + "]";
 	}
 
-	public Object toEntity(AutorRepository autorRepository, CategoriaRepository categoriaRepository) {
-		AutorEntity autorEntity = autorRepository.findById(idAutor)
-				.orElseThrow(IllegalArgumentException::new);
-		CategoriaEntity categoriaEntity = categoriaRepository.findById(idCategoria)
-			.orElseThrow(IllegalArgumentException::new);
-
+	//2
+	public Object toEntity(EntityManager manager) {
+		@NotNull AutorEntity autorEntity = manager.find(AutorEntity.class, idAutor);
+		@NotNull CategoriaEntity categoriaEntity = manager.find(CategoriaEntity.class, idCategoria);
 		
-		return new LivroEntity(titulo, resumo, preco, numeroPagina, isbn, dataPublicacao, autorEntity, categoriaEntity);
+		Assert.state(autorEntity != null, "Tentativa de cadastrar um livro para um autor inexistente no banco de dados. ID Autor "+ idAutor);
+		Assert.state(autorEntity != null, "Tentativa de cadastrar um livro para uma categoria inexistente no banco de dados. ID Categoria "+ idAutor);
+		
+		return LivroEntity.builder()
+				.titulo(titulo)
+				.resumo(resumo)
+				.sumario(sumario)
+				.preco(preco)
+				.numeroPagina(numeroPagina)
+				.isbn(isbn)
+				.dataPublicacao(dataPublicacao)
+				.autorEntity(autorEntity)
+				.categoriaEntity(categoriaEntity)
+				.build();
 	}
 }

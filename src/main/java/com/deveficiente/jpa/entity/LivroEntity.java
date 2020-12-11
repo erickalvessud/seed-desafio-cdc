@@ -12,12 +12,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.util.Assert;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,6 +30,8 @@ import lombok.EqualsAndHashCode;
 @Table(name = "livro")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class LivroEntity {
 
 	@Id
@@ -34,6 +41,7 @@ public class LivroEntity {
 	
 	private String titulo;
 	private String resumo;
+	private String sumario;
 	private BigDecimal preco;
 	private Integer numeroPagina;
 	private String isbn;
@@ -51,13 +59,11 @@ public class LivroEntity {
 	public LivroEntity() {
 		super();
 	}
-
+/*
 	public LivroEntity(@NotBlank String titulo, @NotBlank @Length(max = 500) String resumo,
-			@NotNull @DecimalMin("20.0") BigDecimal preco, Integer numeroPagina, String isbn, LocalDate dataPublicacao,
-			AutorEntity autorEntity, CategoriaEntity categoriaEntity) {
-		
-		Assert.hasLength(titulo, "Atributo titulo não deveria ter vindo nulo ou vazio");
-		Assert.hasLength(resumo, "Atributo resumo não deveria ter vindo nulo ou vazio");
+			@NotNull @DecimalMin("20.0") BigDecimal preco, @NotNull @Min(100) Integer numeroPagina,
+			@NotBlank String isbn, @Future LocalDate dataPublicacao, @NotNull AutorEntity autorEntity,
+			@NotNull CategoriaEntity categoriaEntity) {
 		
 		this.titulo = titulo;
 		this.resumo = resumo;
@@ -68,5 +74,5 @@ public class LivroEntity {
 		this.autorEntity = autorEntity;
 		this.categoriaEntity = categoriaEntity;
 	}
-
+*/
 }
