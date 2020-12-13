@@ -1,6 +1,8 @@
 package com.deveficiente.controller;
 
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -18,32 +20,33 @@ import org.springframework.web.bind.annotation.RestController;
 import com.deveficiente.controller.dto.LivroResponse;
 import com.deveficiente.controller.dto.NovoLivroRequest;
 import com.deveficiente.jpa.entity.LivroEntity;
-import com.deveficiente.jpa.repository.LivroRepository;
 
 @RestController
 @RequestMapping("/livros")
 public class LivroController {
 	
 	private EntityManager manager;
-	private LivroRepository livroRepository;
 	
-	public LivroController(EntityManager manager,LivroRepository livroRepository) {
+	public LivroController(EntityManager manager) {
 		this.manager = manager;
-		this.livroRepository = livroRepository;
 	}
 
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
 	@Transactional
+	//1
 	public void cadastrar(@RequestBody @Valid NovoLivroRequest novoLivroRequest) {
-		manager.persist(novoLivroRequest.toEntity(manager));
+		this.manager.persist(novoLivroRequest.toEntity(manager));
 	}
 	
 	@GetMapping
+	// 2
 	public  ResponseEntity<List<LivroResponse>> consultar() {
-		Iterable<LivroEntity> livroEntities = livroRepository.findAll();
-		List<LivroResponse> livroResponses = LivroResponse.fromEntities(livroEntities);
+		List<LivroResponse> livroResponses = this.manager.createQuery("SELECT l FROM LivroEntity l", LivroEntity.class)
+			.getResultList().stream()
+			.map(LivroResponse::fromEntity)
+			.collect(Collectors.toList());
+		
 		return ResponseEntity.ok(livroResponses);
 	}
-
 }

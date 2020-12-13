@@ -51,7 +51,7 @@ public class LivroResponse {
 		return livroResponses;
 	}
 
-	private static LivroResponse fromEntity(LivroEntity livroEntity) {
+	public static LivroResponse fromEntity(LivroEntity livroEntity) {
 		AutorResponse autorResponse = AutorResponse.builder()
 			.id(livroEntity.getAutorEntity().getId())
 			.nome(livroEntity.getAutorEntity().getNome())
