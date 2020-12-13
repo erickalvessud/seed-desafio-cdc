@@ -28,7 +28,7 @@ public class DetalheLivroResponse {
 		this.sumario = livroEntity.getSumario();
 		this.numeroPagina = livroEntity.getNumeroPagina();
 		this.isbn = livroEntity.getIsbn();
-		this.autor = new DetalheAutorResponse(livroEntity);
+		this.autor = new DetalheAutorResponse(livroEntity.getAutorEntity());
 	}
 
 }
