@@ -141,6 +141,33 @@
 			"response": []
 		},
 		{
+			"name": "Fluxo de compra",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"joao@gmail.com\",\n    \"nome\": \"João\",\n    \"sobrenome\": \"Da Silva\",\n    \"documento\": \"10163927022\",\n    \"endereco\": \"Rua Ruas, 5\",\n    \"complemento\": \"a\",\n    \"cidade\": \"São Paulo\",\n    \"pais\": 1,\n    \"estado\": 1,\n    \"telefone\": \"11999999999\",\n    \"cep\": \"01111-0000\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/pagamento-compra",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pagamento-compra"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Livros - Consulta",
 			"request": {
 				"method": "GET",
