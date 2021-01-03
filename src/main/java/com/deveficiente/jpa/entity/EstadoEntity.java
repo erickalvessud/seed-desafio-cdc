@@ -42,6 +42,9 @@ public class EstadoEntity {
 
 	public EstadoEntity(@NotBlank String nome, @NotNull PaisEntity pais) {
 		Assert.state(nome != null && !nome.isBlank(), "Nome do estado não deveria ser nulo.");
+		Assert.state(pais != null, "País não deveria ser nulo nesse ponto.");
+		
 		this.nome = nome;
+		this.pais = pais;
 	}
 }
