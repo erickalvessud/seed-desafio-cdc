@@ -43,8 +43,6 @@ public class AutorEntity {
 	@Builder.Default
 	private LocalDateTime dataResgistro = LocalDateTime.now();
 	
-	private EmailValidator emailValidator;
-	
 	@Deprecated
 	public AutorEntity() {
 		

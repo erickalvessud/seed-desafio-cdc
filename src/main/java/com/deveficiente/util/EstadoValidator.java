@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import com.deveficiente.controller.dto.PagamentoRequest;
+import com.deveficiente.controller.dto.CompraRequest;
 import com.deveficiente.jpa.repository.EstadoRepository;
 
 @Component
@@ -18,7 +18,7 @@ public class EstadoValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return PagamentoRequest.class.isAssignableFrom(clazz);
+		return CompraRequest.class.isAssignableFrom(clazz);
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class EstadoValidator implements Validator {
 			return;
 		}
 		
-		PagamentoRequest pagamento = (PagamentoRequest)target;
+		CompraRequest pagamento = (CompraRequest)target;
 		
 		Long paisId = pagamento.getPais();
 		

@@ -1,5 +1,6 @@
 package com.deveficiente.controller.dto;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -13,7 +14,7 @@ import lombok.Getter;
 
 @Getter
 @Data
-public class PagamentoRequest {
+public class CompraRequest {
 	
 	@NotBlank
 	@Email
@@ -50,8 +51,11 @@ public class PagamentoRequest {
 	@NotBlank
 	private String cep;
 	
-	public PagamentoRequest(String email, String nome, String sobrenome, String documento, String endereco,
-			String complemento, String cidade, Long pais, String telefone, String cep) {
+	@Valid
+	private PedidoRequest pedido;
+	
+	public CompraRequest(String email, String nome, String sobrenome, String documento, String endereco,
+			String complemento, String cidade, Long pais, String telefone, String cep, PedidoRequest pedido) {
 		super();
 		this.email = email;
 		this.nome = nome;
@@ -63,5 +67,6 @@ public class PagamentoRequest {
 		this.pais = pais;
 		this.telefone = telefone;
 		this.cep = cep;
+		this.pedido = pedido;
 	}
 }
